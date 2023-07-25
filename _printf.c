@@ -6,38 +6,42 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int h = 0, r_value = 0;
+	unsigned int b = 0, r_value = 0;
 
 	va_list args;
 
 	va_start(args, format);
 
-	for (; format[h] != '\0'; h++)
+	for (; format[b] != '\0'; b++)
 	{
-		if (format[h] != '%')
+		if (format[b] != '%')
 		{
-			my_putchar(format[h]);
+			my_putchar(format[b]);
 			r_value += 1;
 		}
-		else if (format[h + 1] == 'c')
+		else if (format[b + 1] == 'c')
 		{
 			my_putchar(va_arg(args, int));
-			h++;
+			b++;
 		}
-		else if (format[h + 1] == 's')
+		else if (format[b + 1] == 's')
 		{
 			int r_string = my_string(va_arg(args, char*));
 
-			h++;
+			b++;
 			r_value += r_string - 1;
 		}
-		else if (format[h + 1] == '%')
+		else if (format[b + 1] == '%')
 		{
 			my_putchar('%');
-			h++;
+			b++;
 			r_value += 1;
 		}
+		else if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
+		{
+			print_int(va_arg(args, int));
+		}
+		r_value += 1;
 	}
-	va_end(args);
 	return (r_value);
 }

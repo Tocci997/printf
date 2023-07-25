@@ -8,8 +8,5 @@
 
 int my_putchar(char a)
 {
-	char z;
-
-	z = write(1, &a, 1);
-	return (z);
+	return (write(1, &a, 1));
 }

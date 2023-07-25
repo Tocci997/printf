@@ -6,12 +6,13 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned h = 0, r_value = 0;
+	unsigned int h = 0, r_value = 0;
 
 	va_list args;
 
 	va_start(args, format);
-	for(; format[h] != '\0'; h++)
+
+	for (; format[h] != '\0'; h++)
 	{
 		if (format[h] != '%')
 		{
@@ -26,6 +27,7 @@ int _printf(const char *format, ...)
 		else if (format[h + 1] == 's')
 		{
 			int r_string = my_string(va_arg(args, char*));
+
 			h++;
 			r_value += r_string - 1;
 		}
@@ -36,5 +38,6 @@ int _printf(const char *format, ...)
 			r_value += 1;
 		}
 	}
+	va_end(args);
 	return (r_value);
 }

@@ -6,7 +6,7 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int h = 0, len = 0;
+	unsigned int h = 0, r_value = 0;
 
 	va_list args;
 
@@ -17,7 +17,7 @@ int _printf(const char *format, ...)
 		if (format[h] != '%')
 		{
 			my_putchar(format[h]);
-			len += 1;
+			r_value += 1;
 		}
 		else if (format[h + 1] == 'c')
 		{
@@ -29,15 +29,15 @@ int _printf(const char *format, ...)
 			int r_string = my_string(va_arg(args, char*));
 
 			h++;
-			len += r_string - 1;
+			r_value += r_string - 1;
 		}
 		else if (format[h + 1] == '%')
 		{
 			my_putchar('%');
 			h++;
-			len += 1;
+			r_value += 1;
 		}
 	}
 	va_end(args);
-	return (len);
+	return (r_value);
 }

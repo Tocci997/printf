@@ -19,29 +19,37 @@ int _printf(const char *format, ...)
 			my_putchar(format[b]);
 			r_value += 1;
 		}
-		else if (format[b + 1] == 'c')
+		if (format[b + 1] == 'c')
 		{
 			my_putchar(va_arg(args, int));
 			b++;
 		}
-		else if (format[b + 1] == 's')
+		if (format[b + 1] == 's')
 		{
 			int r_string = my_string(va_arg(args, char*));
 
 			b++;
 			r_value += r_string - 1;
 		}
-		else if (format[b + 1] == '%')
+		if (format[b + 1] == '%')
 		{
 			my_putchar('%');
 			b++;
 			r_value += 1;
 		}
-		else if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
+		if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
 		{
-			print_int(va_arg(args, int));
+			int n = print_int(va_arg(args, int));
+			
+			r_value += print_int(n);
+			if(!n)
+			{
+				r_value++;
+				my_putchar('0');
+			}
+			else
+				r_value += print_int(n);
 		}
-		r_value += 1;
 	}
 	return (r_value);
 }

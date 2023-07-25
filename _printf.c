@@ -2,11 +2,11 @@
 /**
  * _printf - function to work with printf
  * @format: format specifier
- * Return: value of_printf
+ * Return: number of characters printed
  */
 int _printf(const char *format, ...)
 {
-	unsigned int b = 0, r_value = 0;
+	unsigned int b = 0, len = 0;
 
 	va_list args;
 
@@ -17,7 +17,7 @@ int _printf(const char *format, ...)
 		if (format[b] != '%')
 		{
 			my_putchar(format[b]);
-			r_value += 1;
+			len += 1;
 		}
 		else if (format[b + 1] == 'c')
 		{
@@ -29,19 +29,20 @@ int _printf(const char *format, ...)
 			int r_string = my_string(va_arg(args, char*));
 
 			b++;
-			r_value += r_string - 1;
+			len += r_string - 1;
 		}
 		else if (format[b + 1] == '%')
 		{
 			my_putchar('%');
 			b++;
-			r_value += 1;
+			len += 1;
 		}
 		else if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
 		{
 			print_int(va_arg(args, int));
 		}
-		r_value += 1;
+		len += 1;
 	}
-	return (r_value);
+	va_end(args);
+	return (len);
 }

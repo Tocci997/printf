@@ -40,21 +40,16 @@ int _printf(const char *format, ...)
 		if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
 		{
 			int n = print_int(va_arg(args, int));
-			
-			r_value += print_int(n);
-			if(!n)
+
+			len += print_int(n);
+			if (!n)
 			{
-				r_value++;
+				len++;
 				my_putchar('0');
-			}
-			else
+			} else
 				r_value += print_int(n);
 		}
-<<<<<<< HEAD
-=======
 		len += 1;
->>>>>>> 5eb23655887ab176f2b47b74ddef751651fd1cc9
 	}
-	va_end(args);
 	return (len);
 }

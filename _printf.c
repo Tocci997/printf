@@ -7,7 +7,7 @@
 int _printf(const char *format, ...)
 {
 	int i = 0;
-
+	char chare, *str;
 	va_list data_type;
 
 	if (format == NULL)
@@ -23,23 +23,22 @@ int _printf(const char *format, ...)
 		else
 		{
 			format++;
-			if (*format == 'c')
+			if (*format == '\0')
+				break;
+			if (*format == '%')
 			{
-				char chare = va_arg(data_type, int);
-
+				write(1, format, 1);
+				i++;
+			} else if (*format == 'c')
+			{
+				chare = va_arg(data_type, int);
 				write(1, &chare, 1);
 				i++;
-			}
-			if (*format == 's')
+			} else if (*format == 's')
 			{
-				char *str = va_arg(data_type, char *);
-
-				int len = 0;
-
-				while (str[len] != '\0')
-					len++;
-				write(1, str, len);
-				i += len;
+				str = va_arg(data_type, char *);
+				write(1, str, strlen(str));
+				i++;
 			}
 		}
 		format++;

@@ -6,50 +6,44 @@
  */
 int _printf(const char *format, ...)
 {
-	unsigned int b = 0, len = 0;
+	int i = 0;
 
-	va_list args;
+	va_list data_type;
 
-	va_start(args, format);
-
-	for (; format[b] != '\0'; b++)
+	if (*format == NULL)
+		return (-1);
+	va_start(data_type, format);
+	while (*format)
 	{
-		if (format[b] != '%')
+		if (*format != '%')
 		{
-			my_putchar(format[b]);
-			len += 1;
+			write(1, format, 1);
+			i++;
 		}
-		if (format[b + 1] == 'c')
+		else
 		{
-			my_putchar(va_arg(args, int));
-			b++;
-		}
-		if (format[b + 1] == 's')
-		{
-			int r_string = my_string(va_arg(args, char*));
-
-			b++;
-			len += r_string - 1;
-		}
-		if (format[b + 1] == '%')
-		{
-			my_putchar('%');
-			b++;
-			len += 1;
-		}
-		if ((format[b + 1] == 'd') || (format[b + 1] == 'i'))
-		{
-			int n = print_int(va_arg(args, int));
-
-			len += print_int(n);
-			if (!n)
+			format++;
+			if (*format == 'c')
 			{
-				len++;
-				my_putchar('0');
-			} else
-				r_value += print_int(n);
+				char chare = va_arg(data_type, int);
+
+				write(1, &chare, 1);
+				i++;
+			}
+			if (*format == 's')
+			{
+				char *str = va_arg(data_type, char *);
+
+				int len = 0;
+
+				while (str[len] != '\0')
+					len++;
+				write(1, str, len);
+				data_type += len;
+			}
 		}
-		len += 1;
+		format++;
 	}
-	return (len);
+	va_end(data_type);
+	return (i);
 }

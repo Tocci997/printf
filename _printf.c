@@ -10,7 +10,7 @@ int _printf(const char *format, ...)
 
 	va_list data_type;
 
-	if (*format == NULL)
+	if (format == NULL)
 		return (-1);
 	va_start(data_type, format);
 	while (*format)
@@ -39,7 +39,7 @@ int _printf(const char *format, ...)
 				while (str[len] != '\0')
 					len++;
 				write(1, str, len);
-				data_type += len;
+				i += len;
 			}
 		}
 		format++;
